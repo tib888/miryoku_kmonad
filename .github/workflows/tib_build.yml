@@ -1,0 +1,14 @@
+name: 'tib Build'
+on:
+  - workflow_dispatch
+jobs:
+  test:
+    uses: ./.github/workflows/main.yml
+    with:
+      mode: '["build"]'
+      alphas: '["colemakdhk"]'
+      nav: '["default"]'       #'["invertedt"]'
+      clipboard: '["win"]'
+      layers: '["default"]'
+      mapping: '["default"]'
+      kmonad_os: '["win"]'

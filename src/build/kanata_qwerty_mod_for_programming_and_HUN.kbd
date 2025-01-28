@@ -1,0 +1,86 @@
+;;documentation: 
+;;  https://github.com/jtroo/kanata/blob/main/docs/config.adoc 
+;;  https://github.com/jtroo/kanata/blob/main/parser/src/keys/mod.rs
+
+(defcfg
+process-unmapped-keys yes
+block-unmapped-keys no
+)
+
+(defsrc
+`	1	2	3	4	5	6	7	8	9	0	-	=
+q	w	e	r	t	y	u	i	o	p	[	]	\
+a	s	d	f	j	k	l	;	'
+ContextMenu	ArrowLeft	ArrowRight	ArrowUp	ArrowDown
+)
+
+(defvar
+tap-time 200
+hold-time 200
+)
+
+(defalias 
+
+áÁ (fork (unicode á) (unicode Á) (lsft rsft))
+éÉ (fork (unicode é) (unicode É) (lsft rsft))
+íÍ (fork (unicode í) (unicode Í) (lsft rsft))
+óÓ (fork (unicode ó) (unicode Ó) (lsft rsft))
+öÖ (fork (unicode ö) (unicode Ö) (lsft rsft))
+őŐ (fork (unicode ő) (unicode Ő) (lsft rsft))
+úÚ (fork (unicode ú) (unicode Ú) (lsft rsft))
+üÜ (fork (unicode ü) (unicode Ü) (lsft rsft))
+űŰ (fork (unicode ű) (unicode Ű) (lsft rsft))
+
+a-mod (tap-hold $tap-time $hold-time a (layer-toggle U_CODENAV))
+s-mod (tap-hold $tap-time $hold-time s alt)
+d-mod (tap-hold $tap-time $hold-time d sft)	
+f-mod (tap-hold $tap-time $hold-time f ctl)	
+j-mod (tap-hold $tap-time $hold-time j ctl)	
+k-mod (tap-hold $tap-time $hold-time k sft)	
+l-mod (tap-hold $tap-time $hold-time l alt)	
+;-mod (tap-hold $tap-time $hold-time ; (layer-toggle U_CODENAV))
+áÁ-mod (tap-hold $tap-time $hold-time @áÁ (layer-toggle U_CODENAV))
+éÉ-mod (tap-hold $tap-time $hold-time @éÉ (layer-toggle U_CODENAV))
+ctxt-mod (tap-hold $tap-time $hold-time ContextMenu (layer-toggle U_CODENAV))
+
+\-mod (tap-hold $tap-time $hold-time \ (layer-switch U_HUN_MODE))
+űŰ-mod (tap-hold $tap-time $hold-time @űŰ (layer-switch U_BASE))
+)
+
+(deflayer U_BASE
+`	S-1	S-2	S-3	S-4	S-5	S-6	S-7	S-8	S-9	S-0	-	=
+q	w	e	r	t	y	u	i	o	p	[	]	@\-mod
+@a-mod	@s-mod	@d-mod	@f-mod	@j-mod	@k-mod	@l-mod	@;-mod	'
+@ctxt-mod ArrowLeft ArrowRight	ArrowUp	ArrowDown
+)
+
+(deflayer U_CODENAV
+`	1	2	3	4	5	6	7	8	9	0	-	=
+@űŰ	@üÜ   @éÉ	@őŐ	@öÖ	y	@úÚ	@íÍ	@óÓ	p	[	]	\
+@áÁ-mod	@s-mod	@d-mod	@f-mod	@j-mod	@k-mod	@l-mod	@;-mod	'
+XX mousebackward mouseforward	C-tab	lrld
+)
+
+(deflayer U_HUN_MODE
+@íÍ	1	2	3	4	5	6	7	8	9	@öÖ @üÜ	@óÓ
+q	w	e	r	t	y	u	i	o	p	@őŐ	@úÚ	@űŰ-mod	
+@a-mod	@s-mod	@d-mod	@f-mod	@j-mod	@k-mod	@k-mod	@éÉ-mod	@áÁ
+@ctxt-mod	ArrowLeft ArrowRight	ArrowUp	ArrowDown
+)
+
+;;(deflayermap (U_CODENAV)
+;;q	@űŰ
+;;w	@üÜ
+;;e	@éÉ
+;;r	@őŐ
+;;t	@öÖ
+;;u	@úÚ
+;;i	@íÍ	
+;;o	@óÓ	
+;;a	@áÁ-mod
+;;met	(layer-switch U_HUN_MODE)
+;;ArrowLeft	mousebackward 
+;;ArrowRight	mouseforward	
+;;ArrowUp	C-tab	
+;;ArrowDown	lrld
+;;)
